@@ -1,106 +1,220 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Home, Users, Calendar, Info, Instagram } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50;
+      setScrolled(isScrolled);
+
+      // Update active section based on scroll position
+      const sections = ["home", "about", "people", "social", "events"];
+      const scrollPosition = window.scrollY + 100;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
       setIsOpen(false);
+      setActiveSection(sectionId);
     }
   };
 
+  const navItems = [
+    { id: "home", label: "Home", icon: Home },
+    { id: "about", label: "About", icon: Info },
+    { id: "people", label: "People", icon: Users },
+    { id: "social", label: "Social", icon: Instagram },
+    { id: "events", label: "Events", icon: Calendar },
+  ];
+
   return (
-    <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
+    <motion.nav
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-background/95 backdrop-blur-lg border-b border-border shadow-lg"
+          : "bg-background/80 backdrop-blur-md border-b border-border/50"
+      }`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-2">
-            {/* <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg"></div> */}
-            <div className="w-9 h-9">
-              <img src="/imgs.png" alt="AIASA Logo" className="w-9 h-9 rounded-lg" />
-            </div>
-            <span className="font-bold text-xl text-foreground">AIASA</span>
-          </div>
+          {/* Logo */}
+          <motion.div
+            className="flex items-center space-x-3 cursor-pointer"
+            onClick={() => scrollToSection("home")}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <motion.div
+              className="relative w-10 h-10"
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.6 }}
+            >
+              <img src="/imgs.png" alt="AIASA Logo" className="w-10 h-10 rounded-xl shadow-md" />
+              <motion.div
+                className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/20 to-secondary/20"
+                animate={{ opacity: [0, 0.5, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            </motion.div>
+            <span className="font-bold text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              AIASA
+            </span>
+          </motion.div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-6">
-            <button
-              onClick={() => scrollToSection("home")}
-              className="text-foreground hover:text-primary transition-colors"
-            >
-              Home
-            </button>
-            <button
-              onClick={() => scrollToSection("about")}
-              className="text-foreground hover:text-primary transition-colors"
-            >
-              About
-            </button>
-            <button
-              onClick={() => scrollToSection("people")}
-              className="text-foreground hover:text-primary transition-colors"
-            >
-              People
-            </button>
-            <button
-              onClick={() => scrollToSection("events")}
-              className="text-foreground hover:text-primary transition-colors"
-            >
-              Events
-            </button>
-            <ThemeToggle />
+          <div className="hidden md:flex items-center space-x-2">
+            {navItems.map((item, index) => (
+              <motion.button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
+                  activeSection === item.id
+                    ? "text-primary"
+                    : "text-foreground hover:text-primary"
+                }`}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <item.icon className="w-4 h-4" />
+                {item.label}
+                {activeSection === item.id && (
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl"
+                    layoutId="activeSection"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+                {activeSection === item.id && (
+                  <motion.div
+                    className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-0.5 bg-gradient-to-r from-primary to-secondary rounded-full"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                )}
+              </motion.button>
+            ))}
+
+            <div className="ml-4 pl-4 border-l border-border">
+              <ThemeToggle />
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center space-x-2">
+          <div className="md:hidden flex items-center gap-3">
             <ThemeToggle />
-            <Button
-              variant="ghost"
-              size="sm"
+            <motion.button
               onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-xl hover:bg-muted transition-colors"
+              whileTap={{ scale: 0.95 }}
             >
-              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </Button>
+              <AnimatePresence mode="wait">
+                {isOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <X className="w-6 h-6" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Menu className="w-6 h-6" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.button>
           </div>
         </div>
 
         {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden py-4 border-t border-border">
-            <div className="flex flex-col space-y-2">
-              <button
-                onClick={() => scrollToSection("home")}
-                className="text-left py-2 px-4 text-foreground hover:text-primary transition-colors"
-              >
-                Home
-              </button>
-              <button
-                onClick={() => scrollToSection("about")}
-                className="text-left py-2 px-4 text-foreground hover:text-primary transition-colors"
-              >
-                About
-              </button>
-              <button
-                onClick={() => scrollToSection("people")}
-                className="text-left py-2 px-4 text-foreground hover:text-primary transition-colors"
-              >
-                People
-              </button>
-              <button
-                onClick={() => scrollToSection("events")}
-                className="text-left py-2 px-4 text-foreground hover:text-primary transition-colors"
-              >
-                Events
-              </button>
-            </div>
-          </div>
-        )}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-lg border-b border-border shadow-lg"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <div className="container mx-auto px-4 py-4">
+                <motion.div
+                  className="flex flex-col space-y-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  {navItems.map((item, index) => (
+                    <motion.button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      className={`flex items-center gap-3 p-3 rounded-xl text-left transition-all duration-300 ${
+                        activeSection === item.id
+                          ? "bg-gradient-to-r from-primary/10 to-secondary/10 text-primary border border-primary/20"
+                          : "text-foreground hover:text-primary hover:bg-muted"
+                      }`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <item.icon className="w-5 h-5" />
+                      <span className="font-medium">{item.label}</span>
+                      {activeSection === item.id && (
+                        <motion.div
+                          className="ml-auto w-2 h-2 bg-gradient-to-r from-primary to-secondary rounded-full"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ duration: 0.3 }}
+                        />
+                      )}
+                    </motion.button>
+                  ))}
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

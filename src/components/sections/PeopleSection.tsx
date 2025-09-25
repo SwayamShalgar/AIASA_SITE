@@ -1,271 +1,336 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Mail, Linkedin, Github } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Mail, Linkedin, Github, Award, Users, Crown, Star } from "lucide-react";
+import { AnimatedSection, StaggeredAnimation, StaggeredItem, ScaleOnHover } from "@/components/ui/animated-components";
+import { motion } from "framer-motion";
 
 const PeopleSection = () => {
-  const section1 = [
+  const leadership = [
     {
       name: "Patil Sir",
       role: "HOD",
       department: "Artificial Intelligence and Data Science",
       expertise: ["Machine Learning", "Neural Networks", "AI Ethics"],
-      bio: "Head of Artificial Intelligence and Data Science Department with 15 years of experience.",
+      bio: "Head of Artificial Intelligence and Data Science Department with 15+ years of experience in advancing AI education and research.",
       avatar: "/placeholder.svg",
-      email: "sarah.chen@university.edu",
+      email: "patil@university.edu",
       linkedin: "#",
-      github: "#"
+      github: "#",
+      icon: Crown,
+      gradient: "from-yellow-500 to-orange-500"
     },
     {
       name: "Vijay Sir",
       role: "AIASA Faculty Coordinator",
       department: "Artificial Intelligence and Data Science",
       expertise: ["Big Data", "Statistics", "Data Mining"],
-      bio: "Faculty coordinator for AIASA, specializing in Data analytics.",
+      bio: "Faculty coordinator for AIASA, specializing in Data analytics and student mentorship.",
       avatar: "/placeholder.svg",
-      email: "m.rodriguez@university.edu",
+      email: "vijay@university.edu",  
       linkedin: "#",
-      github: "#"
-    },
-    {
-      name: "Tarang",
-      role: "AIASA President",
-      department: "Artificial Intelligence and Data Science (TY)",
-      expertise: ["Computer Vision", "Deep Learning", "Robotics"],
-      bio: "Pioneering work in computer vision and autonomous systems.",
-      avatar: "/placeholder.svg",
-      email: "emily.wang@university.edu",
-      linkedin: "#",
-      github: "#"
-    },
-    {
-      name: "Unkonwn",
-      role: "Vice President",
-      department: "Artificial Intelligence and Data Science (SY)",
-      expertise: ["NLP", "Transformers", "Language Models"],
-      bio: "PhD candidate focusing on natural language processing and AI applications.",
-      avatar: "/placeholder.svg",
-      email: "alex.thompson@student.university.edu",
-      linkedin: "#",
-      github: "#"
-    },
-    {
-      name: "Unknown",
-      role: "Seceretary",
-      department: "Artificial Intelligence and Data Science",
-      expertise: ["AI Strategy", "Tech Transfer", "Industry Relations"],
-      bio: "Bridging academia and industry for practical AI implementations.",
-      avatar: "/placeholder.svg",
-      email: "raj.patel@university.edu",
-      linkedin: "#",
-      github: "#"
-    },
-    {
-      name: "Unknown",
-      role: "Treasurer",
-      department: "Artificial Intelligence and Data Science",
-      expertise: ["Event Management", "Community Building", "Outreach"],
-      bio: "Organizing impactful events and building our research community.",
-      avatar: "/placeholder.svg",
-      email: "maria.silva@university.edu",
-      linkedin: "#",
-      github: "#"
+      github: "#",
+      icon: Award,
+      gradient: "from-blue-500 to-purple-500"
     }
   ];
 
-    const section2 = [
-    {
-      name: "",
-      role: "HOD",
-      department: "Artificial Intelligence and Data Science",
-      expertise: ["Machine Learning", "Neural Networks", "AI Ethics"],
-      bio: "Head of Artificial Intelligence and Data Science Department with 15 years of experience.",
-      avatar: "/placeholder.svg",
-      email: "sarah.chen@university.edu",
-      linkedin: "#",
-      github: "#"
-    },
-    {
-      name: "Vijay Sir",
-      role: "AIASA Faculty Coordinator",
-      department: "Artificial Intelligence and Data Science",
-      expertise: ["Big Data", "Statistics", "Data Mining"],
-      bio: "Faculty coordinator for AIASA, specializing in Data analytics.",
-      avatar: "/placeholder.svg",
-      email: "m.rodriguez@university.edu",
-      linkedin: "#",
-      github: "#"
-    },
+  const executiveTeam = [
     {
       name: "Tarang",
       role: "AIASA President",
       department: "Artificial Intelligence and Data Science (TY)",
       expertise: ["Computer Vision", "Deep Learning", "Robotics"],
-      bio: "Pioneering work in computer vision and autonomous systems.",
+      bio: "Leading AIASA with vision and innovation, pioneering work in computer vision and autonomous systems.",
       avatar: "/placeholder.svg",
-      email: "emily.wang@university.edu",
+      email: "tarang@student.university.edu",
       linkedin: "#",
-      github: "#"
+      github: "#",
+      icon: Crown,
+      gradient: "from-purple-500 to-pink-500"
     },
     {
-      name: "Unkonwn",
+      name: "Vice President",
       role: "Vice President",
       department: "Artificial Intelligence and Data Science (SY)",
       expertise: ["NLP", "Transformers", "Language Models"],
-      bio: "PhD candidate focusing on natural language processing and AI applications.",
+      bio: "Supporting the president in strategic initiatives, focusing on natural language processing and AI applications.",
       avatar: "/placeholder.svg",
-      email: "alex.thompson@student.university.edu",
+      email: "vp@student.university.edu",
       linkedin: "#",
-      github: "#"
+      github: "#",
+      icon: Star,
+      gradient: "from-green-500 to-teal-500"
     },
     {
-      name: "Unknown",
-      role: "Seceretary",
+      name: "Secretary",
+      role: "Secretary",
       department: "Artificial Intelligence and Data Science",
       expertise: ["AI Strategy", "Tech Transfer", "Industry Relations"],
-      bio: "Bridging academia and industry for practical AI implementations.",
+      bio: "Managing communications and bridging academia with industry for practical AI implementations.",
       avatar: "/placeholder.svg",
-      email: "raj.patel@university.edu",
+      email: "secretary@student.university.edu",
       linkedin: "#",
-      github: "#"
+      github: "#",
+      icon: Users,
+      gradient: "from-cyan-500 to-blue-500"
     },
     {
-      name: "Unknown",
+      name: "Treasurer",
       role: "Treasurer",
       department: "Artificial Intelligence and Data Science",
       expertise: ["Event Management", "Community Building", "Outreach"],
-      bio: "Organizing impactful events and building our research community.",
+      bio: "Managing finances and organizing impactful events to build our vibrant research community.",
       avatar: "/placeholder.svg",
-      email: "maria.silva@university.edu",
+      email: "treasurer@student.university.edu",
       linkedin: "#",
-      github: "#"
+      github: "#",
+      icon: Award,
+      gradient: "from-red-500 to-pink-500"
     }
   ];
+
+  const TeamCard = ({ person, index }: { person: any; index: number }) => (
+    <StaggeredItem>
+      <ScaleOnHover scale={1.03}>
+        <Card className="group hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-background/90 to-background/70 backdrop-blur-sm border-border/50 hover:border-primary/30 relative overflow-hidden h-full">
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          />
+          <motion.div
+            className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${person.gradient} opacity-10 rounded-bl-full`}
+            whileHover={{ scale: 1.2, opacity: 0.2 }}
+            transition={{ duration: 0.3 }}
+          />
+          
+          <CardContent className="p-8 relative z-10">
+            <div className="flex flex-col items-center text-center">
+              {/* Avatar with enhanced styling */}
+              <motion.div 
+                className="relative mb-6"
+                whileHover={{ scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <Avatar className="w-24 h-24 border-4 border-background shadow-lg">
+                  <AvatarImage src={person.avatar} alt={person.name} />
+                  <AvatarFallback className={`text-2xl font-bold bg-gradient-to-br ${person.gradient} text-white`}>
+                    {person.name.split(' ').map((n: string) => n[0]).join('')}
+                  </AvatarFallback>
+                </Avatar>
+                <motion.div
+                  className={`absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br ${person.gradient} rounded-full flex items-center justify-center shadow-lg`}
+                  whileHover={{ rotate: 180 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <person.icon className="w-4 h-4 text-white" />
+                </motion.div>
+              </motion.div>
+
+              {/* Name and Role */}
+              <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                {person.name}
+              </h3>
+              <div className={`inline-block px-4 py-2 rounded-full bg-gradient-to-r ${person.gradient} text-white text-sm font-semibold mb-3 shadow-md`}>
+                {person.role}
+              </div>
+              <p className="text-sm text-muted-foreground mb-4 font-medium">
+                {person.department}
+              </p>
+
+              {/* Bio */}
+              <p className="text-sm text-foreground/80 mb-6 leading-relaxed">
+                {person.bio}
+              </p>
+
+              {/* Expertise Tags */}
+              <div className="flex flex-wrap gap-2 mb-6 justify-center">
+                {person.expertise.map((skill: string, skillIndex: number) => (
+                  <motion.div
+                    key={skill}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: skillIndex * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <Badge 
+                      variant="secondary" 
+                      className="text-xs hover:bg-primary hover:text-primary-foreground transition-colors cursor-default"
+                    >
+                      {skill}
+                    </Badge>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Social Links */}
+              <div className="flex gap-3">
+                {person.email !== "#" && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-10 w-10 p-0 hover:bg-primary hover:text-primary-foreground transition-colors"
+                    asChild
+                  >
+                    <a href={`mailto:${person.email}`}>
+                      <Mail className="w-4 h-4" />
+                    </a>
+                  </Button>
+                )}
+                {person.linkedin !== "#" && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-10 w-10 p-0 hover:bg-blue-600 hover:text-white transition-colors"
+                    asChild
+                  >
+                    <a href={person.linkedin} target="_blank" rel="noopener noreferrer">
+                      <Linkedin className="w-4 h-4" />
+                    </a>
+                  </Button>
+                )}
+                {person.github !== "#" && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-10 w-10 p-0 hover:bg-gray-800 hover:text-white transition-colors"
+                    asChild
+                  >
+                    <a href={person.github} target="_blank" rel="noopener noreferrer">
+                      <Github className="w-4 h-4" />
+                    </a>
+                  </Button>
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </ScaleOnHover>
+    </StaggeredItem>
+  );
 
   return (
-    <section id="people" className="py-20">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Our Team
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Meet the brilliant minds driving innovation in artificial intelligence and data science Department.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {section1.map((person, index) => (
-            <Card key={index} className="group hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="text-center mb-4">
-                  <Avatar className="w-24 h-24 mx-auto mb-4 group-hover:scale-105 transition-transform">
-                    <AvatarImage src={person.avatar} alt={person.name} />
-                    <AvatarFallback className="text-lg bg-gradient-to-br from-primary to-secondary text-primary-foreground">
-                      {person.name.split(' ').map(n => n[0]).join('')}
-                    </AvatarFallback>
-                  </Avatar>
-                  <h3 className="text-xl font-semibold text-foreground mb-1">{person.name}</h3>
-                  <p className="text-primary font-medium mb-1">{person.role}</p>
-                  <p className="text-sm text-muted-foreground mb-3">{person.department}</p>
-                </div>
-
-                <p className="text-sm text-foreground/80 mb-4 line-clamp-2">{person.bio}</p>
-
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {person.expertise.slice(0, 3).map((skill, skillIndex) => (
-                    <Badge key={skillIndex} variant="secondary" className="text-xs">
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-
-                <div className="flex justify-center space-x-3 pt-4 border-t border-border">
-                  <a 
-                    href={`mailto:${person.email}`}
-                    className="p-2 text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <Mail className="w-4 h-4" />
-                  </a>
-                  <a 
-                    href={person.linkedin}
-                    className="p-2 text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <Linkedin className="w-4 h-4" />
-                  </a>
-                  <a 
-                    href={person.github}
-                    className="p-2 text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <Github className="w-4 h-4" />
-                  </a>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        
-        
+    <section id="people" className="py-24 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl"
+          animate={{ 
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3] 
+          }}
+          transition={{ duration: 8, repeat: Infinity }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"
+          animate={{ 
+            scale: [1.2, 1, 1.2],
+            opacity: [0.6, 0.3, 0.6] 
+          }}
+          transition={{ duration: 10, repeat: Infinity }}
+        />
       </div>
-      <div className="container mt-14 mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Team Leads
-          </h2>
-        </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {section1.map((person, index) => (
-            <Card key={index} className="group hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="text-center mb-4">
-                  <Avatar className="w-24 h-24 mx-auto mb-4 group-hover:scale-105 transition-transform">
-                    <AvatarImage src={person.avatar} alt={person.name} />
-                    <AvatarFallback className="text-lg bg-gradient-to-br from-primary to-secondary text-primary-foreground">
-                      {person.name.split(' ').map(n => n[0]).join('')}
-                    </AvatarFallback>
-                  </Avatar>
-                  <h3 className="text-xl font-semibold text-foreground mb-1">{person.name}</h3>
-                  <p className="text-primary font-medium mb-1">{person.role}</p>
-                  <p className="text-sm text-muted-foreground mb-3">{person.department}</p>
-                </div>
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Section Header */}
+        <AnimatedSection className="text-center mb-16">
+          <motion.h2 
+            className="text-5xl md:text-6xl font-bold text-foreground mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            Meet Our{" "}
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Team
+            </span>
+          </motion.h2>
+          <motion.div
+            className="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto mb-8 rounded-full"
+            initial={{ width: 0 }}
+            whileInView={{ width: "6rem" }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            viewport={{ once: true }}
+          />
+          <motion.p 
+            className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            Passionate leaders and innovators driving the future of AI and data science education, 
+            research, and community building.
+          </motion.p>
+        </AnimatedSection>
 
-                <p className="text-sm text-foreground/80 mb-4 line-clamp-2">{person.bio}</p>
+        {/* Leadership Section */}
+        <AnimatedSection className="mb-20">
+          <motion.h3 
+            className="text-3xl font-bold text-center text-foreground mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <Crown className="inline-block w-8 h-8 mr-3 text-yellow-500" />
+            Faculty Leadership
+          </motion.h3>
+          <StaggeredAnimation className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto" staggerDelay={0.2}>
+            {leadership.map((person, index) => (
+              <TeamCard key={person.name} person={person} index={index} />
+            ))}
+          </StaggeredAnimation>
+        </AnimatedSection>
 
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {person.expertise.slice(0, 3).map((skill, skillIndex) => (
-                    <Badge key={skillIndex} variant="secondary" className="text-xs">
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
+        {/* Executive Team Section */}
+        <AnimatedSection>
+          <motion.h3 
+            className="text-3xl font-bold text-center text-foreground mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <Star className="inline-block w-8 h-8 mr-3 text-primary" />
+            Student Executive Team
+          </motion.h3>
+          <StaggeredAnimation className="grid md:grid-cols-2 lg:grid-cols-4 gap-8" staggerDelay={0.15}>
+            {executiveTeam.map((person, index) => (
+              <TeamCard key={person.name} person={person} index={index} />
+            ))}
+          </StaggeredAnimation>
+        </AnimatedSection>
 
-                <div className="flex justify-center space-x-3 pt-4 border-t border-border">
-                  <a 
-                    href={`mailto:${person.email}`}
-                    className="p-2 text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <Mail className="w-4 h-4" />
-                  </a>
-                  <a 
-                    href={person.linkedin}
-                    className="p-2 text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <Linkedin className="w-4 h-4" />
-                  </a>
-                  <a 
-                    href={person.github}
-                    className="p-2 text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <Github className="w-4 h-4" />
-                  </a>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        
-        
+        {/* Call to Action */}
+        <AnimatedSection className="text-center mt-20">
+          <motion.div
+            className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-3xl p-8 md:p-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-3xl font-bold text-foreground mb-4">Join Our Team</h3>
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Interested in contributing to our mission? We're always looking for passionate individuals 
+              to join our community and help shape the future of AI and data science.
+            </p>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button 
+                size="lg"
+                className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white px-8 py-3 rounded-2xl shadow-lg"
+              >
+                <Users className="w-5 h-5 mr-2" />
+                Get Involved
+              </Button>
+            </motion.div>
+          </motion.div>
+        </AnimatedSection>
       </div>
     </section>
   );
